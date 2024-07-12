@@ -1,5 +1,15 @@
+import { Metadata } from "next";
+
 import Navbar from "@/components/Navbar";
 import Sidebar from "@/components/Sidebar";
+
+export const metadata: Metadata = {
+  title: "FaceLink",
+  description: "A Video Conference web application",
+  icons: {
+    icon: '/logo.png'
+  }
+};
 
 const HomeLayout = ({ children }: { children: React.ReactNode }) => {
   return (
