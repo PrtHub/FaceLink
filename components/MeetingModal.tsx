@@ -51,7 +51,7 @@ const MeetingModal = ({
             className="bg-green-1 hover:bg-green-1/80 focus-visible:ring-0 focus-visible:ring-offset-0"
             onClick={handleClick}
           > 
-            {Icon && <Icon className="size-3" />} &nbsp;
+            {Icon && <Icon className="size-4" />} &nbsp;
             {buttonText || "Schedule Meeting"}
           </Button>
         </div>
