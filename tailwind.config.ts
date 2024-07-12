@@ -26,6 +26,15 @@ const config = {
         green : {
            1: "#0FB563",
         },
+        yellow : {
+           1: "#FEB527",
+        },
+        red : {
+           1: "#EE1414",
+        },
+        blue : {
+           1: "#2F96F5",
+        },
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
@@ -59,6 +68,9 @@ const config = {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
+      },
+      backgroundImage: {
+         banner: "url('/banner.png')"
       },
       borderRadius: {
         lg: "var(--radius)",
