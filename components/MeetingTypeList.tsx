@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useUser } from "@clerk/nextjs";
 import { useRouter } from "next/navigation";
 import { Call, useStreamVideoClient } from "@stream-io/video-react-sdk";
-import { Calendar, Check, Copy, Plus, User, Video } from "lucide-react";
+import { Calendar, Copy, Plus, User, Video } from "lucide-react";
 import MeetingModal from "./MeetingModal";
 import MeetingCard from "@/components/MeetingCard";
 import toast from "react-hot-toast";
@@ -157,6 +157,22 @@ const MeetingTypeList = () => {
         className="text-center"
         handleClick={createMeeting}
       />
+
+      <MeetingModal
+        isOpen={meetingState === "isJoiningMeeting"}
+        onClose={() => setMeetingState(undefined)}
+        title="Type the link here"
+        buttonText="Join Meeting"
+        className="text-center"
+        handleClick={() => router.push(values.link)}
+      >
+        <input
+          type="text"
+          className="bg-dark-2 p-2 border-none outline-none rounded"
+          placeholder="Meeting link"
+          onChange={(e) => setValues({ ...values, link: e.target.value })}
+        />
+      </MeetingModal>
     </section>
   );
 };
