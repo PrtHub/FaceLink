@@ -91,7 +91,15 @@ const CallList = ({ type }: { type: "ended" | "upcoming" | "recordings" }) => {
               "Personal Meeting"
             }
             date={
-              (meeting as Call).state?.startsAt?.toLocaleString() ||
+              (meeting as Call).state?.startsAt?.toLocaleString("en-US", {
+                weekday: "long",
+                month: "long",
+                day: "numeric",
+                year: "numeric",
+                hour: "2-digit",
+                minute: "2-digit",
+                hour12: true,
+            }) ||
               (meeting as CallRecording).start_time?.toString()
             }
             isPreviousMeeting={type === "ended"}
