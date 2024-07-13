@@ -1,5 +1,5 @@
 import MeetingTypeList from "@/components/MeetingTypeList";
-import Upcoming from "@/components/upcoming";
+import UpcomingMeetingDate from "@/components/UpcomingMeetingDate";
 
 const HomePage = () => {
   const now = new Date();
@@ -18,7 +18,7 @@ const HomePage = () => {
     <section className="size-full flex flex-col gap-10  text-white">
       <div className="w-full h-72 rounded-xl bg-banner bg-cover">
         <article className="flex flex-col h-full justify-between max-md:px-5 max-md:py-8 lg:p-11">
-          <Upcoming />
+          <UpcomingMeetingDate />
           <span className="flex flex-col gap-2">
             <h1 className="text-3xl lg:text-5xl font-bold">{formattedTime}</h1>
             <p className="text-lg font-medium lg:text-xl text-gray-300">
