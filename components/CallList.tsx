@@ -3,7 +3,7 @@
 import { UseGetCalls } from "@/hooks/useGetCalls";
 import { Call, CallRecording } from "@stream-io/video-react-sdk";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import CallCard from "./CallCard";
 import {
   ChevronLeftSquare,
@@ -12,6 +12,7 @@ import {
   Play,
   Video,
 } from "lucide-react";
+import toast from "react-hot-toast";
 
 const CallList = ({ type }: { type: "ended" | "upcoming" | "recordings" }) => {
   const router = useRouter();
@@ -27,7 +28,6 @@ const CallList = ({ type }: { type: "ended" | "upcoming" | "recordings" }) => {
         return endedCalls;
       case "upcoming":
         return upcomingCalls;
-
       default:
         return [];
     }
@@ -46,11 +46,31 @@ const CallList = ({ type }: { type: "ended" | "upcoming" | "recordings" }) => {
     }
   };
 
+  useEffect(() => {
+    const fetchRecordings = async () => {
+     try {
+       const callData = await Promise.all(
+         recordingCalls?.map((meeting) => meeting.queryRecordings()) ?? []
+       );
+ 
+       const recordings = callData
+         .filter((call) => call.recordings.length > 0)
+         .flatMap((call) => call.recordings);
+ 
+       setRecordings(recordings);
+     } catch {
+       toast.error("Try again later");
+     }
+    };
+
+    if (type === "recordings") fetchRecordings();
+  }, [type, recordingCalls]);
+
   const calls = getCalls();
   const noCallsMessages = getNoCallsMessage();
 
-
-  if(isLoading) return <Loader className="animate-spin text-white size-6 mt-10"/>
+  if (isLoading)
+    return <Loader className="animate-spin text-white size-6 mt-10" />;
 
   return (
     <section className="grid grid-cols-1  xl:grid-cols-2 gap-5 ">
@@ -59,13 +79,11 @@ const CallList = ({ type }: { type: "ended" | "upcoming" | "recordings" }) => {
           <CallCard
             key={(meeting as Call).id}
             icon={
-              type === "ended" ? (
-                ChevronLeftSquare
-              ) : type === "upcoming" ? (
-                ChevronRightSquare
-              ) : (
-                Video
-              )
+              type === "ended"
+                ? ChevronLeftSquare
+                : type === "upcoming"
+                ? ChevronRightSquare
+                : Video
             }
             title={
               (meeting as Call).state?.custom?.description ||
@@ -94,7 +112,7 @@ const CallList = ({ type }: { type: "ended" | "upcoming" | "recordings" }) => {
           />
         ))
       ) : (
-        <h1 className="text-2xl font-semibold text-white">{noCallsMessages}</h1>
+        <h1 className="text-xl font-medium text-white">{noCallsMessages}</h1>
       )}
     </section>
   );
