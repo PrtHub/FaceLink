@@ -17,13 +17,15 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { LayoutList, Users } from "lucide-react";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import EndCallButton from "./EndCallButton";
 import Loader from "./Loader";
+import toast from "react-hot-toast";
 
 type CallLayoutType = "grid" | "speaker-left" | "speaker-right";
 
 const MeetingRoom = () => {
+  const router = useRouter()
   const searchParams = useSearchParams();
   const isPersonalRoom = !!searchParams.get("personal");
   const [layout, setLayout] = useState<CallLayoutType>("speaker-left");
@@ -60,7 +62,10 @@ const MeetingRoom = () => {
           <CallParticipantsList onClose={() => setShowParticipants(false)} />
         </div>
         <div className="fixed bottom-0 w-full gap-5 flex items-center justify-center flex-wrap">
-          <CallControls />
+          <CallControls onLeave={() => {
+             router.push('/')
+             toast.success("you have left from the meeting!")
+          }}/>
 
           <DropdownMenu>
             <div className="flex items-center justify-center">
